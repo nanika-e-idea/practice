@@ -31,7 +31,7 @@
 const axios = require('axios');
 
 let url = "https://jsonplaceholder.typicode.com/posts/";
-
+ 
 export default {
     data: function(){
         return {
