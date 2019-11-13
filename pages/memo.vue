@@ -31,6 +31,10 @@
             <span @click="select(item)">{{item.title}}({{item.created}})</span>
         </li>
     </ul>
+    <hr>
+    <div  class="nav">
+        <span @click="prev">&lt;prev</span>&nbsp;|&nbsp;<span @click="next">next&gt;</span>
+    </div>
   </section>
 </template>
 
@@ -101,7 +105,44 @@ export default {
             this.title = item.title;
             this.content = item.content;
         },
-        remove: function() {},
-    }
+        remove: function() {
+            if (this.sel_flg == false) {
+                return;
+            } else {
+                this.$store.commit('memo/remove', this.sel_flg);
+                this.set_flg();
+            }
+        },
+        find: function() {
+            this.sel_flg = false;
+            this.find_flg = true;
+        },
+        next: function() {
+            this.page ++;
+        },
+        prev: function() {
+            this.page --;
+        },
+    },
+    created: function(){
+        this.$store.commit('memo/set_page', 0);
+    },
 }
 </script>
+<style scoped>
+.nav{
+  padding: 0 10px;
+  cursor: pointer;
+}
+.list{
+  cursor: pointer;
+}
+.del-enter-active,
+.del-leave-active{
+  transition: opacity .5s;
+}
+.del-enter,
+.del-leave-to{
+  opacity: 0;
+}
+</style>
